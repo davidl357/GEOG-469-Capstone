@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Auburn Food Bank</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+</head>
+<body>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!--add external JS file with locations of food banks-->
+    <script src="Auburn_food_bank_locations.js"></script>
+    <script src="Auburn_food_bank_boundaries.js"></script>
+
+    <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
+    <script>
+
+        // creates a map variable centered at a point and zoomed
+        var map = L.map('map', {center: [47.29, -122.15], zoom: 11});
+
+        // uses open street map basemap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // adds the javascript file with food bank locations to the map
+        
+        var foodBankPoint = L.geoJSON(foodBankLocations, {
+            onEachFeature: popUpPoint
+        }).addTo(map);
+        
+
+        // adds the javascript file with food bank boundaries to the map
+        var foodBankBoundary = L.geoJSON(foodBankBoundaries, {
+            onEachFeature: popUpBoundary
+        }).addTo(map);
+
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: Creates a popup that requires a user to click on a point and displays information
+        //       about the food bank including contact and hour information
+        function popUpPoint(feature, layer) {
+            layer.bindPopup(
+                'Food Bank Name: '.bold() + feature.properties.name + '<br/><br/>' +
+                'Address: '.bold() + feature.properties.address + '<br/><br/>' +
+                'Phone Number: '.bold() + feature.properties.phone + '<br/><br/>' +
+                'Email Address: '.bold() + feature.properties.email + '<br/><br/>' +
+                'Hours of Operation: '.bold() + feature.properties.hours + '<br/><br/>' +
+                'Website: '.bold() + feature.properties.url);
+        };
+
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: When the user hovers over a boundary, it displays the name of that boundary
+        //       The popup only appears when the boundary is hovered over and disappears afterward
+        function popUpBoundary(feature, layer) {
+            layer.bindPopup(
+                feature.properties.location + ' Food Bank Boundary');
+            layer.on('mouseover', newStyle);
+            layer.on('mouseout', oldStyle);
+        };  
+
+        // Post: Sets the default color of zero state 
+        function oldStyle() {
+            foodBankBoundary.setStyle({ color: "blue" });
+        }
+        
+
+        // Pre: Takes in an event object 
+        // Post: Changes the color of the boundary when hovered over by user
+        function newStyle(e) {
+            e.target.setStyle({ color: "red" });
+        }
+
+    </script>
+</body>
+</html>

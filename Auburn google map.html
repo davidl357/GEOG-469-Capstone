@@ -23,7 +23,6 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         // adds the javascript file with food bank locations to the map
-        
         var foodBankPoint = L.geoJSON(foodBankLocations, {
             onEachFeature: popUpPoint
         }).addTo(map);

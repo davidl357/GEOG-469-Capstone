@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Auburn Food Bank</title>
+    <title>South King County Food Banks</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 </head>
 <body>
@@ -10,19 +10,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
     <!--add external JS file with locations of food banks-->
-    <script src="Auburn_food_bank_locations.js"></script>
-    <script src="Auburn_food_bank_boundaries.js"></script>
+    <script src="food_bank_locations.js"></script>
+    <script src="food_bank_boundaries.js"></script>
 
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
 
         // creates a map variable centered at a point and zoomed
-        var map = L.map('map', {center: [47.29, -122.15], zoom: 11});
+        var map = L.map('map', { center: [47.387277, -122.201836], zoom: 10 });
 
         // uses open street map basemap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         // adds the javascript file with food bank locations to the map
+        
         var foodBankPoint = L.geoJSON(foodBankLocations, {
             onEachFeature: popUpPoint
         }).addTo(map);
@@ -42,7 +43,8 @@
                 'Address: '.bold() + feature.properties.address + '<br/><br/>' +
                 'Phone Number: '.bold() + feature.properties.phone + '<br/><br/>' +
                 'Email Address: '.bold() + feature.properties.email + '<br/><br/>' +
-                'Hours of Operation: '.bold() + feature.properties.hours);
+                'Hours of Operation: '.bold() + feature.properties.hours + '<br/><br/>' +
+                'Website: '.bold() + '<br> <a href="' + feature.properties.url + '" target= "_blank">Food Bank Website Link</a>');
         };
 
         // Pre: Takes in JS object and the layer that has the map variable

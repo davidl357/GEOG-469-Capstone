@@ -12,15 +12,10 @@
     <!--add external JS file with locations of food banks-->
     <script src="Auburn_food_bank_locations.js"></script>
     <script src="Auburn_food_bank_boundaries.js"></script>
-    <script src="Transit_Stops_Auburn.js"></script>
 
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
-
-        var busIcon = L.icon({
-            iconUrl: 'http://l.thumbs.canstockphoto.com/canstock8020581.jpg'
-        });
-
+        
         // creates a map variable centered at a point and zoomed
         var map = L.map('map', {center: [47.29, -122.15], zoom: 11});
 

@@ -12,6 +12,7 @@
     <!--add external JS file with locations of food banks-->
     <script src="Auburn_food_bank_locations.js"></script>
     <script src="Auburn_food_bank_boundaries.js"></script>
+    <script src="Auburn_transit_routes.js"></script>
 
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
@@ -33,7 +34,7 @@
             onEachFeature: popUpBoundary
         }).addTo(map);
 
-        //var transitStopPoints = L.geoJSON(transitStopsAuburn, { icon: busIcon, draggable: true}).addTo(map);
+        var transitRoutes = L.geoJSON(auburnTransitRoutes).addTo(map);
 
         // Pre: Takes in JS object and the layer that has the map variable
         // Post: Creates a popup that requires a user to click on a point and displays information

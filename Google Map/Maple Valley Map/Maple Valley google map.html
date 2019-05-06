@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Auburn Food Bank</title>
+    <title>Maple Valley Food Bank</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
 </head>
 <body>
@@ -34,7 +34,7 @@
             onEachFeature: popUpBoundary
         }).addTo(map);
 
-        var transitRoutes = L.geoJSON(mapleValleyTransitRoutes).addTo(map);
+        var transitRoutes = L.geoJSON(mapleValleyTransitRoutes, {color: "black"}).addTo(map);
 
         // Pre: Takes in JS object and the layer that has the map variable
         // Post: Creates a popup that requires a user to click on a point and displays information

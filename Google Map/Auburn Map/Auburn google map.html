@@ -23,18 +23,22 @@
         // uses open street map basemap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        // adds the javascript file with food bank locations to the map
+        // adds the javascript file with food bank location to the map
         var foodBankPoint = L.geoJSON(foodBankLocations, {
             onEachFeature: popUpPoint
         }).addTo(map);
         
 
-        // adds the javascript file with food bank boundaries to the map
+        // adds the javascript file with food bank boundary to the map
         var foodBankBoundary = L.geoJSON(foodBankBoundaries, {
             onEachFeature: popUpBoundary
         }).addTo(map);
 
-        var transitRoutes = L.geoJSON(auburnTransitRoutes, { color: "black" }).addTo(map);
+        // adds the javascript file with transit routes within the food bank boundary
+        var transitRoutes = L.geoJSON(auburnTransitRoutes, {
+            onEachFeature: popUpTransitRoute,
+            color: "black"
+        }).addTo(map);
 
         // Pre: Takes in JS object and the layer that has the map variable
         // Post: Creates a popup that requires a user to click on a point and displays information
@@ -57,6 +61,14 @@
             layer.on('mouseover', newStyle);
             layer.on('mouseout', oldStyle);
         };  
+
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: When the user hovers over a transit route, it displays the name of that bus route
+        //       The popup only appears when the boundary is hovered over and disappears afterward
+        function popUpTransitRoute(feature, layer) {
+            layer.bindPopup(
+                'Bus route ' + feature.properties.CHANGE_NUM);
+        };
 
         // Post: Sets the default color of zero state 
         function oldStyle() {

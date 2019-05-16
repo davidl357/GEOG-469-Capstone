@@ -12,26 +12,33 @@
     <!--add external JS file with locations of food banks-->
     <script src="Des_Moines_food_bank_locations.js"></script>
     <script src="Des_Moines_food_bank_boundaries.js"></script>
+    <script src="Des_Moines_transit_routes.js"></script>
 
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
 
         // creates a map variable centered at a point and zoomed
-        var map = L.map('map', { center: [47.405255, -122.323312], zoom: 12});
+        var map = L.map('map', { center: [47.405255, -122.323312], zoom: 12 });
 
         // uses open street map basemap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         // adds the javascript file with food bank locations to the map
-        
+
         var foodBankPoint = L.geoJSON(foodBankLocations, {
             onEachFeature: popUpPoint
         }).addTo(map);
-        
+
 
         // adds the javascript file with food bank boundaries to the map
         var foodBankBoundary = L.geoJSON(foodBankBoundaries, {
             onEachFeature: popUpBoundary
+        }).addTo(map);
+
+        // adds the javascript file with transit routes within the food bank boundary
+        var transitRoutes = L.geoJSON(desMoinesTransitRoutes, {
+            onEachFeature: popUpTransitRoute,
+            color: "black"
         }).addTo(map);
 
         // Pre: Takes in JS object and the layer that has the map variable
@@ -54,15 +61,15 @@
                 feature.properties.location + ' Food Bank Boundary');
             layer.on('mouseover', newStyle);
             layer.on('mouseout', oldStyle);
-        };  
+        };
 
-        // Post: Sets the default color of zero state 
+        // Post: Sets the default color of zero state
         function oldStyle() {
             foodBankBoundary.setStyle({ color: "blue" });
         }
-        
 
-        // Pre: Takes in an event object 
+
+        // Pre: Takes in an event object
         // Post: Changes the color of the boundary when hovered over by user
         function newStyle(e) {
             e.target.setStyle({ color: "red" });

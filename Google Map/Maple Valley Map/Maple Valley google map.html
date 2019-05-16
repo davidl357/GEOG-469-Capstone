@@ -34,6 +34,7 @@
             onEachFeature: popUpBoundary
         }).addTo(map);
 
+        // adds the javascript file with transit routes within the food bank boundary
         var transitRoutes = L.geoJSON(mapleValleyTransitRoutes, {
             onEachFeature: popUpTransitRoute,
             color: "black"

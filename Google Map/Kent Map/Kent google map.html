@@ -63,6 +63,14 @@
             layer.on('mouseout', oldStyle);
         };
 
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: When the user hovers over a transit route, it displays the name of that bus route
+        //       The popup only appears when the boundary is hovered over and disappears afterward
+        function popUpTransitRoute(feature, layer) {
+            layer.bindPopup(
+                'Bus route ' + feature.properties.ROUTE_NUM);
+        };
+
         // Post: Sets the default color of zero state
         function oldStyle() {
             foodBankBoundary.setStyle({ color: "blue" });

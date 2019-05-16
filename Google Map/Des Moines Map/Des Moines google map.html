@@ -18,7 +18,7 @@
     <script>
 
         // creates a map variable centered at a point and zoomed
-        var map = L.map('map', { center: [47.405255, -122.323312], zoom: 12 });
+        var map = L.map('map', { center: [47.405255, -122.323312], zoom: 11 });
 
         // uses open street map basemap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
@@ -41,6 +41,7 @@
             color: "black"
         }).addTo(map);
 
+
         // Pre: Takes in JS object and the layer that has the map variable
         // Post: Creates a popup that requires a user to click on a point and displays information
         //       about the food bank including contact and hour information
@@ -61,6 +62,14 @@
                 feature.properties.location + ' Food Bank Boundary');
             layer.on('mouseover', newStyle);
             layer.on('mouseout', oldStyle);
+        };
+
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: When the user hovers over a transit route, it displays the name of that bus route
+        //       The popup only appears when the boundary is hovered over and disappears afterward
+        function popUpTransitRoute(feature, layer) {
+            layer.bindPopup(
+                'Bus route ' + feature.properties.ROUTE_NUM);
         };
 
         // Post: Sets the default color of zero state

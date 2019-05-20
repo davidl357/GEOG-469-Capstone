@@ -16,66 +16,66 @@
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
 
-                // creates a map variable centered at a point and zoomed
-                var map = L.map('map', { center: [47.387277, -122.201836], zoom: 9 });
+        // creates a map variable centered at a point and zoomed
+        var map = L.map('map', { center: [47.387277, -122.201836], zoom: 9 });
 
-                // uses open street map basemap
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        // uses open street map basemap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-                // adds the javascript file with food bank locations to the map
-                var foodBankPoint = L.geoJSON(foodBankLocations, {
-                    onEachFeature: popUpPoint
-                }).addTo(map);
+        // adds the javascript file with food bank locations to the map
+        var foodBankPoint = L.geoJSON(foodBankLocations, {
+            onEachFeature: popUpPoint
+        }).addTo(map);
 
 
-                // adds the javascript file with food bank boundaries to the map
-                var foodBankBoundary = L.geoJSON(foodBankBoundaries, {
-                    onEachFeature: popUpBoundary
-                }).addTo(map);
+        // adds the javascript file with food bank boundaries to the map
+        var foodBankBoundary = L.geoJSON(foodBankBoundaries, {
+            onEachFeature: popUpBoundary
+        }).addTo(map);
 
-                // Pre: Takes in JS object and the layer that has the map variable
-                // Post: Creates a popup that requires a user to click on a point and displays information
-                //       about the food bank including contact and hour information
-                function popUpPoint(feature, layer) {
-                    layer.bindPopup(
-                        'Food Bank Name: '.bold() + feature.properties.name + '<br/><br/>' +
-                        'Address: '.bold() + feature.properties.address + '<br/><br/>' +
-                        'Phone Number: '.bold() + feature.properties.phone + '<br/><br/>' +
-                        'Email Address: '.bold() + feature.properties.email + '<br/><br/>' +
-                        'Hours of Operation: '.bold() + feature.properties.hours + '<br/><br/>' +
-                        'Website: '.bold() + '<br> <a href="' + feature.properties.url + '" target= "_blank">Food Bank Website Link</a>');
-                };
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: Creates a popup that requires a user to click on a point and displays information
+        //       about the food bank including contact and hour information
+        function popUpPoint(feature, layer) {
+            layer.bindPopup(
+                'Food Bank Name: '.bold() + feature.properties.name + '<br/><br/>' +
+                'Address: '.bold() + feature.properties.address + '<br/><br/>' +
+                'Phone Number: '.bold() + feature.properties.phone + '<br/><br/>' +
+                'Email Address: '.bold() + feature.properties.email + '<br/><br/>' +
+                'Hours of Operation: '.bold() + feature.properties.hours + '<br/><br/>' +
+                'Website: '.bold() + '<br> <a href="' + feature.properties.url + '" target= "_blank">Food Bank Website Link</a>');
+        };
 
-                // Pre: Takes in JS object and the layer that has the map variable
-                // Post: When the user hovers over a boundary, it displays the name of that boundary
-                //       The popup only appears when the boundary is hovered over and disappears afterward
-                function popUpBoundary(feature, layer) {
-                    layer.bindPopup(
-                        feature.properties.location + ' Food Bank Boundary');
-                    layer.on('mouseover', newStyle);
-                    layer.on('mouseout', oldStyle);
-                };
+        // Pre: Takes in JS object and the layer that has the map variable
+        // Post: When the user hovers over a boundary, it displays the name of that boundary
+        //       The popup only appears when the boundary is hovered over and disappears afterward
+        function popUpBoundary(feature, layer) {
+            layer.bindPopup(
+                feature.properties.location + ' Food Bank Boundary');
+            layer.on('mouseover', newStyle);
+            layer.on('mouseout', oldStyle);
+        };
 
-                // Post: Sets the default color of zero state
-                function oldStyle() {
-                    foodBankBoundary.setStyle({ color: "blue" });
-                }
+        // Post: Sets the default color of zero state
+        function oldStyle() {
+            foodBankBoundary.setStyle({ color: "blue" });
+        }
 
-                // Pre: Takes in an event object
-                // Post: Changes the color of the boundary when hovered over by user
-                function newStyle(e) {
-                    e.target.setStyle({ color: "red" });
-                }
+        // Pre: Takes in an event object
+        // Post: Changes the color of the boundary when hovered over by user
+        function newStyle(e) {
+            e.target.setStyle({ color: "red" });
+        }
 
-                map.locate({ setView: false, watch: true})
-                    .on('locationfound', function (e) {
-                        var marker = L.marker([e.latitude, e.longitude]);
-                        map.addLayer(marker);
-                    })
-                    .on('locationerror', function (e) {
-                        console.log(e);
-                        alert("Location access denied.");
-                    });
+        map.locate({ setView: false, watch: true})
+            .on('locationfound', function (e) {
+                var marker = L.marker([e.latitude, e.longitude]);
+                map.addLayer(marker);
+            })
+            .on('locationerror', function (e) {
+                console.log(e);
+                alert("Location access denied.");
+            });
     </script>
 </body>
 </html>

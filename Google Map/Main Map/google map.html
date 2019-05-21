@@ -81,18 +81,7 @@
             e.target.setStyle({ color: "red" });
         }
 
-        /*
-        map.locate({ setView: false, watch: true })
-            .on('locationfound', function (e) {
-                var marker = L.marker([e.latitude, e.longitude], { icon: bankIcon });
-                map.addLayer(marker);
-            })
-            .on('locationerror', function (e) {
-                console.log(e);
-                alert("Location access denied.");
-            });
-        */
-
+        // Creates a leaflet search control that allows user input of address and marker display
         map.addControl(new L.Control.Search({
             url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
             jsonpParam: 'json_callback',

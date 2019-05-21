@@ -3,11 +3,26 @@
 <head>
     <title>South King County Food Banks</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="leaflet-search.css" />
 </head>
 <body>
+
+    <style>
+        .search-input {
+            font-family: Courier
+        }
+
+        .search-input,
+        .leaflet-control-search {
+            max-width: 400px;
+        }
+    </style>
+
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="leaflet-search.js"></script>
 
     <!--add external JS file with locations of food banks-->
     <script src="food_bank_locations.js"></script>
@@ -26,7 +41,6 @@
         var foodBankPoint = L.geoJSON(foodBankLocations, {
             onEachFeature: popUpPoint
         }).addTo(map);
-
 
         // adds the javascript file with food bank boundaries to the map
         var foodBankBoundary = L.geoJSON(foodBankBoundaries, {
@@ -67,15 +81,29 @@
             e.target.setStyle({ color: "red" });
         }
 
-        map.locate({ setView: false, watch: true})
+        /*
+        map.locate({ setView: false, watch: true })
             .on('locationfound', function (e) {
-                var marker = L.marker([e.latitude, e.longitude]);
+                var marker = L.marker([e.latitude, e.longitude], { icon: bankIcon });
                 map.addLayer(marker);
             })
             .on('locationerror', function (e) {
                 console.log(e);
                 alert("Location access denied.");
             });
+        */
+
+        map.addControl(new L.Control.Search({
+            url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+            jsonpParam: 'json_callback',
+            propertyName: 'display_name',
+            propertyLoc: ['lat', 'lon'],
+            marker: L.circleMarker([0, 0], { radius: 30 }),
+            autoCollapse: true,
+            autoType: false,
+            minLength: 2
+        }));
+
     </script>
 </body>
 </html>

@@ -28,6 +28,8 @@
     <script src="food_bank_locations.js"></script>
     <script src="food_bank_boundaries.js"></script>
 
+    <h3 align="center">South King County Food Coalition Food Banks</h3>
+
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
 
@@ -87,7 +89,7 @@
             jsonpParam: 'json_callback',
             propertyName: 'display_name',
             propertyLoc: ['lat', 'lon'],
-            marker: L.circleMarker([0, 0], { radius: 10, color: 'red' }),
+            marker: L.circleMarker([0, 0], { radius: 10, color: 'black' }),
             autoCollapse: true,
             autoType: false,
             minLength: 2

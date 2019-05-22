@@ -3,16 +3,26 @@
 <head>
     <title>Tukwila Food Bank</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="leaflet-search.css" />
 </head>
 <body>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
+    <script src="leaflet-search.js"></script>
+
     <!--add external JS file with locations of food banks-->
     <script src="Tukwila_food_bank_locations.js"></script>
     <script src="Tukwila_food_bank_boundaries.js"></script>
     <script src="Tukwila_transit_routes.js"></script>
+
+    <div align="center">
+        <button onclick="busRoutes()">Add Bus Routes</button>
+        <button onclick="removeBusRoutes()">Remove Bus Routes</button>
+    </div>
+
+    <br />
 
     <div id="map" style="width: 800px; height: 600px; margin:auto;"></div>
     <script>
@@ -65,6 +75,8 @@
         // Pre: Takes in JS object and the layer that has the map variable
         // Post: When the user hovers over a transit route, it displays the name of that bus route
         //       The popup only appears when the boundary is hovered over and disappears afterward
+        function newStyle(e) { var layer = e.target; layer.setStyle({ weight: 5 }); }
+        function oldStyle(e) { typeLayer.resetStyle(e.target); }
         function popUpTransitRoute(feature, layer) {
             layer.bindPopup(
                 'Bus route ' + feature.properties.ROUTE_NUM);
@@ -81,6 +93,26 @@
         function newStyle(e) {
             e.target.setStyle({ color: "red" });
         }
+
+        function busRoutes() {
+            transitRoutes.addTo(map);
+        }
+
+        function removeBusRoutes() {
+            map.removeLayer(transitRoutes);
+        }
+
+        // Creates a leaflet search control that allows user input of address and marker display
+        map.addControl(new L.Control.Search({
+            url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+            jsonpParam: 'json_callback',
+            propertyName: 'display_name',
+            propertyLoc: ['lat', 'lon'],
+            marker: L.circleMarker([0, 0], { radius: 10, color: 'black' }),
+            autoCollapse: true,
+            autoType: false,
+            minLength: 2
+        }));
 
     </script>
 </body>
